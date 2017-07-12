@@ -5,24 +5,23 @@
  * In order to describe a position and a direction of a `Unit` or `Component`
  */
 
-#ifndef __TMC_CISIM_TRANSFORM_H__
-#define __TMC_CISIM_TRANSFORM_H__
+#ifndef __TMC_MCC_TRANSFORM_H__
+#define __TMC_MCC_TRANSFORM_H__
+#include "common.h"
 #include <array>
+namespace tmc { namespace mcc {
 
 class Transform
 {
-    private:
-        enum Direction;
-        array<int, 3> p;
-        Direction d;
     public:
-        enum Direction {up, left, down, right};
-        Transform(const Array<int, 3> &_p, Direction _d):position(_p),direction(_d) {}
-        Transform():Transform({0, 0, 0}, Direction::up);
+        typedef _Position Position;
+        typedef _Direction Direction;
+        Transform(const Position &_p, Direction _d):p(_p),d(_d) {}
+        Transform():Transform(Position(), Direction::up) {};
         /**
          * Returns the position of this transform object 
          */
-        const array<int, 3> &position()
+        const Position &position()
         {
             return p;
         }
@@ -32,7 +31,7 @@ class Transform
          * 
          * Returns the reference of the object itself to implement method chaining
          */
-        Transform &position(const array<int, 3> &_p)
+        Transform &position(const Position &_p)
         {
             p = _p;
             return *this;
@@ -54,5 +53,11 @@ class Transform
             d = _d;
             return *this;
         }
-}
+
+    protected:
+        Position p;
+        Direction d;
+};
+
+}}
 #endif

@@ -1,4 +1,4 @@
-# Circuit Simu
+# Micircuit (Project MCC)
  准备开一个写电子元件模拟的坑，基本原理跟 `Minecraft` 的红石电路类似，用于练习，随时弃坑预警。
  
 ## 想法
