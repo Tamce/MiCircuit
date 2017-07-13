@@ -7,6 +7,7 @@ namespace tmc { namespace mcc {
 class BoradIterator
 {
     public:
+        BoardIterator(Board &_board):board(_board);
         Unit &operator*();
         Unit &get();
         BoardIterator &up();
@@ -16,8 +17,8 @@ class BoradIterator
         BoardIterator &move(const array<int, DEMENTION> &);
         BoardIterator &move(Direction, int);
     protected:
-        Board *board;
-        Position position;
+        Board &board;
+        Transform::Position position;
 };
 
 }}

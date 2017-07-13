@@ -54,6 +54,26 @@ class Transform
             return *this;
         }
 
+        Transform operator+(const Transform &o)
+        {
+            Transform result(*this);
+            for (int i = 0; i < DEMENTION; ++i)
+            {
+                result.p[i] += o.p[i];
+            }
+            return result;
+        }
+
+        Transform operator-(const Transform &o)
+        {
+            Transform result(*this);
+            for (int i = 0; i < DEMENTION; ++i)
+            {
+                result.p[i] -= o.p[i];
+            }
+            return result;
+        }
+
     protected:
         Position p;
         Direction d;

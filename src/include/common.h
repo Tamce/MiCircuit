@@ -8,7 +8,8 @@
 
 namespace tmc { namespace mcc {
 
-typedef ::std::array<int, DEMENTION> _Position;
+typedef ::std::array<unsigned int, DEMENTION> _Position;
+typedef _Position Size;
 typedef enum {up, left, down, right} _Direction;
 
 }}
