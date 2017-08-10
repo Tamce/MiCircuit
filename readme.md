@@ -1,14 +1,28 @@
-# Micircuit (Project MCC)
+# MiCircuit (Project MCC)
+ [GitHub](https://github.com/tamce/MiCircuit)  
  准备开一个写电子元件模拟的坑，基本原理跟 `Minecraft` 的红石电路类似，用于练习，随时弃坑预警。
  
 ## 想法
  * 整体由 1x1 的基本单元 `Unit` 组成，基本单元拥有基本功能如简单传输功能、信号增强功能、单项电流通过功能等。
- * 每个单元的功能由脚本描述，使用 `lua` ？ 这样就可以具有拓展性，`built-in` 的话也不是不可以，这样子新增元件的时候就需要重新编译。
+ * ~~每个单元的功能由脚本描述，使用 `lua` ？ 这样就可以具有拓展性，`built-in` 的话也不是不可以，这样子新增元件的时候就需要重新编译。~~
+    * 不引入脚本，先实现基本功能
  * 多个单元可以组成一个组件 `Component`，一个组件具有一定的形状（因为由多个单元组成），规定组件必须由连续的单元组成。
  * 一个组件可以由一个或多个单元和组件组成，组件具有形状（也可以看作矩形，没有元件的部分以空 `Null` 填满。
+ * `BoardIterator` 类提供简单的方法在 `Board` 上进行移动
+ * `Unit` 类用于表示基本单元，其应该包括：
+    * 类型 - `unsigned int`
+    * 位置、方向信息 - `tmc::mcc::Transform`
+    * 状态信息
+ * 每一个详细的基本单元应该从 `Unit` 类派生
+ * 关于 `Unit` 的状态，不同类型的基本原件的状态信息不同，状态信息应该由子类实现并管理
+ * ~~类型信息由 `Unit` 基类处理的话，如果添加新的类型原件，则需要修改基类，重新编译不是问题，不考虑那么多暂时（~~
+ * 类型信息是所有派生于 `Unit` 类所共有的特性，故理所当然作为基类属性先（
+ * Board 中的 Unit 线性存储。
+
+##　TODO
+ * 测试 `BoardIterator`
+ * 测试 `Transform` 的加减操作
 
 ## DOING
  * class `BoardIterator`
- * class `Transform`
- * class `Unit`
  * class `Component`

@@ -16,8 +16,13 @@ class Transform
     public:
         typedef _Position Position;
         typedef _Direction Direction;
+        static const unsigned int X = _X_AXIS;
+        static const unsigned int Y = _Y_AXIS;
+        static const unsigned int Z = _Z_AXIS;
+        /* Constructors */
         Transform(const Position &_p, Direction _d):p(_p),d(_d) {}
         Transform():Transform(Position(), Direction::up) {};
+        Transform(const Position &_p):Transform(Position(_p), Direction::up) {};
         /**
          * Returns the position of this transform object 
          */
@@ -73,10 +78,12 @@ class Transform
             }
             return result;
         }
-
+#ifndef DEBUG
     protected:
+#endif
         Position p;
         Direction d;
+
 };
 
 }}

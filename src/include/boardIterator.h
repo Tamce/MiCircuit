@@ -7,15 +7,22 @@ namespace tmc { namespace mcc {
 class BoradIterator
 {
     public:
+        /* Create a iterator of a board */
         BoardIterator(Board &_board):board(_board);
+        /* Get the element that the iterator is pointing to */
         Unit &operator*();
         Unit &get();
-        BoardIterator &up();
-        BoardIterator &down();
+        /* Move the iterator by 1 unit */
+        BoardIterator &front();
+        BoardIterator &back();
         BoardIterator &left();
         BoardIterator &right();
-        BoardIterator &move(const array<int, DEMENTION> &);
-        BoardIterator &move(Direction, int);
+        BoardIterator &up();
+        BoardIterator &down();
+        /* Move the iterator by a vector*/
+        BoardIterator &move(const Position &);
+        /* Move the iterator by n unit */
+        BoardIterator &move(const Direction &, int n);
     protected:
         Board &board;
         Transform::Position position;

@@ -1,7 +1,11 @@
-#include "../src/include/transform.h"
+class A
+{
+public:
+    const static int a;
+};
+const int A::a = 0;
 int main()
 {
-    using namespace tmc::mcc;
-    Transform::Position p;
+    int b = A::a;
     return 0;
 }

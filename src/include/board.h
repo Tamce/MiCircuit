@@ -7,10 +7,10 @@
 
 namespace tmc { namespace mcc {
 
-class Borad
+class Board
 {
     public:
-        Board(const Size &_size):units(nullptr);
+        Board(const Size &_size);
         Board(const Board &&) = delete;
         Board(const Board &) = delete;
         ~Board();
@@ -19,8 +19,17 @@ class Borad
          * Set the board size to _size.
          *
          * All data will lost after resize.
+         * Ignore the case that the memory allocation is failed.
          */
         void resize(const Size &_size);
+
+        /**
+         * Returns the size of the board
+         */
+        const Size &size()
+        {
+            return msize;
+        }
 
         /**
          * Returns the reference of the target unit object.
@@ -30,7 +39,7 @@ class Borad
         /**
          * Get the Unit object at specific Position
          */
-        const Unit &get(const Transform::Position &_position) const;
+        const Unit &get(const Transform::Position &_position);
 
         /**
          * Set the target position unit to `_unit` if target is `Null`
@@ -62,7 +71,7 @@ class Borad
          */
         // Unit &transform(const Transform::Position &, const Transform &);
     protected:
-        array<int, 3> size;
+        Size msize;
         Unit *units;
 };
 
