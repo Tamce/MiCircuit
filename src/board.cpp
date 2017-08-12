@@ -33,6 +33,13 @@ namespace tmc { namespace mcc {
 
     Unit &Board::at(const Transform::Position &p)
     {
+        // Apply border check
+        for (int i = 0; i < DEMENTION; ++i)
+        {
+            if (p[i] >= msize[i])
+                throw "Out of range!";
+        }
+
         // Return the value in the target position
         // As if the `units` data is orderred as `Unit[x][y][z]...`
         // unit + x * size(dy * dz) + y * size(dz) + z
