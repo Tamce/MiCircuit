@@ -13,6 +13,11 @@ namespace tmc { namespace mcc {
         return board.at(position);
     }
 
+    const Transform::Position &BoardIterator::pos() const
+    {
+        return position;
+    }
+
     BoardIterator &BoardIterator::top()
     {
         position[Transform::Z] += 1;
@@ -37,7 +42,7 @@ namespace tmc { namespace mcc {
         return *this;
     }
 
-    BoardIterator &BoardItertor::up()
+    BoardIterator &BoardIterator::up()
     {
         position[Transform::Y] += 1;
         return *this;
@@ -49,7 +54,7 @@ namespace tmc { namespace mcc {
         return *this;
     }
 
-    BoardIterator &BoardIterator::move(const Position &p)
+    BoardIterator &BoardIterator::move(const Transform::Position &p)
     {
         for (int i = 0; i < DEMENTION; ++i)
         {
@@ -58,29 +63,37 @@ namespace tmc { namespace mcc {
         return *this;
     }
 
-    BoardIterator &move(const Direction &d, int n)
+    BoardIterator &BoardIterator::move(const Transform::Direction &d, int n)
     {
-        auto foo = &top;
+        // Make a pointer point to the function to call.
+        BoardIterator &(BoardIterator::*foo)();
         switch (d)
         {
-            case Direction::up:
-                foo = up;
-            case Direction::down:
-                foo = down;
-            case Direction::left:
-                foo = left;
-            case Direction::right:
-                foo = right;
-            case Direction::top:
-                foo = top;
-            case Direction::bottom:
-                foo = bottom;
+            case Transform::Direction::up:
+                foo = &BoardIterator::up;
+                break;
+            case Transform::Direction::down:
+                foo = &BoardIterator::down;
+                break;
+            case Transform::Direction::left:
+                foo = &BoardIterator::left;
+                break;
+            case Transform::Direction::right:
+                foo = &BoardIterator::right;
+                break;
+            case Transform::Direction::top:
+                foo = &BoardIterator::top;
+                break;
+            case Transform::Direction::bottom:
+                foo = &BoardIterator::bottom;
+                break;
             default:
                 throw "Unexpected Direction enum value!";
         }
         while (n-- > 0)
         {
-            foo();
+            // Call that member function on `this`
+            (this->*foo)();
         }
         return *this;
     }

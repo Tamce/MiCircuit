@@ -43,7 +43,7 @@ class Transform
         /**
          * Returns the position of this transform object 
          */
-        const Position &position()
+        const Position &position() const
         {
             return p;
         }
@@ -62,7 +62,7 @@ class Transform
         /**
          * Returns the direction of this transform object
          */
-        const Direction &direction()
+        const Direction &direction() const
         {
             return d;
         }

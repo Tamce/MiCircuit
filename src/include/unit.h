@@ -50,11 +50,11 @@ class Unit
         /**
          * Determine whether a Unit is a instance of Type t.
          */
-        bool is(const Type &t);
-        const Type &type();
-        const Transform &transform();
+        bool is(const Type &t) const;
+        const Type &type() const;
+        const Transform &transform() const;
         Unit &setTransform(const Transform &t);
-        const Status &status();
+        const Status &status() const;
         Unit &setStatus(const Transform::Direction &d, ElectricPotential ep);
 
         /**
@@ -68,7 +68,12 @@ class Unit
 #ifdef DEBUG
         virtual void print()
         {
-            std::printf("Unit(%d;%d,%d,%d)", mtype, mtransform.position()[0], mtransform.position()[1], mtransform.position()[2]);
+            std::printf("Unit(%d;%d,%d,%d):Status(%d,%d,%d,%d,%d,%d)\n",
+                mtype,
+                mtransform.position()[0], mtransform.position()[1], mtransform.position()[2],
+                mstatus[Transform::Direction::up], mstatus[Transform::Direction::down],
+                mstatus[Transform::Direction::left], mstatus[Transform::Direction::right],
+                mstatus[Transform::Direction::top], mstatus[Transform::Direction::bottom]);
         }
 #endif
     protected:

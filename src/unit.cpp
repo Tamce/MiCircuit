@@ -1,6 +1,6 @@
 #include "include/unit.h"
 namespace tmc { namespace mcc {
-    const Transform &Unit::transform()
+    const Transform &Unit::transform() const
     {
         return mtransform;
     }
@@ -11,7 +11,7 @@ namespace tmc { namespace mcc {
         return *this;
     }
 
-    const Unit::Status &Unit::status()
+    const Unit::Status &Unit::status() const
     {
         return mstatus;
     }
@@ -22,12 +22,12 @@ namespace tmc { namespace mcc {
         return *this;
     }
 
-    bool Unit::is(const Type &t)
+    bool Unit::is(const Type &t) const
     {
         return mtype == t;
     }
 
-    const Unit::Type &Unit::type()
+    const Unit::Type &Unit::type() const
     {
         return mtype;
     }
