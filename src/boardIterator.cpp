@@ -13,15 +13,15 @@ namespace tmc { namespace mcc {
         return board.at(position);
     }
 
-    BoardIterator &BoardIterator::front()
+    BoardIterator &BoardIterator::top()
     {
-        position[Transform::Y] += 1;
+        position[Transform::Z] += 1;
         return *this;
     }
 
-    BoardIterator &BoardIterator::back()
+    BoardIterator &BoardIterator::bottom()
     {
-        position[Transform::Y] -= 1;
+        position[Transform::Z] -= 1;
         return *this;
     }
 
@@ -39,13 +39,13 @@ namespace tmc { namespace mcc {
 
     BoardIterator &BoardItertor::up()
     {
-        position[Transform::Z] += 1;
+        position[Transform::Y] += 1;
         return *this;
     }
 
     BoardIterator &BoardIterator::down()
     {
-        position[Transform::Z] -= 1;
+        position[Transform::Y] -= 1;
         return *this;
     }
 
@@ -58,26 +58,31 @@ namespace tmc { namespace mcc {
         return *this;
     }
 
-    // !耦合
     BoardIterator &move(const Direction &d, int n)
     {
+        auto foo = &top;
         switch (d)
         {
             case Direction::up:
-                return up();
+                foo = up;
             case Direction::down:
-                return down();
+                foo = down;
             case Direction::left:
-                return left();
+                foo = left;
             case Direction::right:
-                return right();
-            case Direction::front:
-                return front;
-            case Direction::back:
-                return back();
+                foo = right;
+            case Direction::top:
+                foo = top;
+            case Direction::bottom:
+                foo = bottom;
             default:
-                throw "Something bad happened(";
+                throw "Unexpected Direction enum value!";
         }
+        while (n-- > 0)
+        {
+            foo();
+        }
+        return *this;
     }
 
     

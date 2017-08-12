@@ -11,6 +11,23 @@
 #include <array>
 namespace tmc { namespace mcc {
 
+typedef ::std::array<unsigned int, DEMENTION> _Position;
+typedef _Position Size;
+// To get the opposite direction of one just do the calculation: `(d ^ 0x10)`
+// Rotate(Not considering up and down): up --- +1 ---> right --- ^0x11 ---> down --- +1 ----> left --- ^0x11 ---> up
+// Rotate: if (d & 1) d ^= 0x11; else d += 1;
+typedef enum {
+    up    = 0x00, down   = 0x10,
+    right = 0x01, left   = 0x11,
+    top   = 0x02, bottom = 0x12,
+} _Direction;
+
+// Get the opposite direction of given direction `d`
+_Direction operator!(const _Direction &d)
+{
+    return _Direction(d ^ 0x10);
+}
+
 class Transform
 {
     public:
@@ -59,6 +76,27 @@ class Transform
             return *this;
         }
 
+        Transform &rotate(int times = 1)
+        {
+            // if d is {top, bottom}, do nothing
+            if (d & 0x02)
+                return *this;
+
+            // rotate `times` times in clockwise direction
+            while (times-- > 0)
+            {
+                if (d & 1)
+                {
+                    // d is one of {right, left}
+                    d = Direction(d ^ 0x11);
+                } else {
+                    // d is one of {up, down}
+                    d = Direction(d + 1);
+                }
+            }
+            return *this;
+        }
+
         Transform operator+(const Transform &o)
         {
             Transform result(*this);
@@ -78,9 +116,8 @@ class Transform
             }
             return result;
         }
-#ifndef DEBUG
+
     protected:
-#endif
         Position p;
         Direction d;
 

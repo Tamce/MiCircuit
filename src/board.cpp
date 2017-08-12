@@ -12,7 +12,6 @@ namespace tmc { namespace mcc {
         delete[] units;
     }
 
-    // !耦合维度
     void Board::resize(const Transform::Position &_size)
     {
         delete[] units;
@@ -23,11 +22,11 @@ namespace tmc { namespace mcc {
         }
         units = new Unit[s];
         
-        unsigned int blockX = _size[1] * _size[2];
-        unsigned int blockY = _size[2];
-        for (unsigned int x = 0; x < _size[0]; ++x)
-            for (unsigned int y = 0; y < _size[1]; ++y)
-                for (unsigned int z = 0; z < _size[2]; ++z)
+        unsigned int blockX = _size[Transform::Y] * _size[Transform::Z];
+        unsigned int blockY = _size[Transform::Z];
+        for (unsigned int x = 0; x < _size[Transform::X]; ++x)
+            for (unsigned int y = 0; y < _size[Transform::Y]; ++y)
+                for (unsigned int z = 0; z < _size[Transform::Z]; ++z)
                     units[x * blockX + y * blockY + z].setTransform(Transform({x, y, z}));
         msize = _size;
     }

@@ -15,6 +15,7 @@
 #ifndef __TMC_MCC_UNIT_H__
 #define __TMC_MCC_UNIT_H__
 #include "transform.h"
+#include <unordered_map>
 
 namespace tmc { namespace mcc {
 
@@ -38,19 +39,32 @@ class Unit
 {
     public:
         typedef UnitType::Type Type;
+        typedef int ElectricPotential;
+        typedef ::std::unordered_map<
+            Transform::Direction, ElectricPotential,
+            ::std::hash<int>, ::std::equal_to<int>, ::std::allocator<std::pair<const int, ElectricPotential>>> Status;
 
         Unit(const Type &t, const Transform &tr):mtype(t),mtransform(tr){}
         Unit(const Type &t):Unit(t, Transform()){}
         Unit():Unit(UnitType::Null, Transform()){}
-        const Type &type()
-        {
-            return mtype;
-        }
-        bool is(const Type &t)
-        {
-            return mtype == t;
-        }
-        Unit &setTransform(const Transform &);
+        /**
+         * Determine whether a Unit is a instance of Type t.
+         */
+        bool is(const Type &t);
+        const Type &type();
+        const Transform &transform();
+        Unit &setTransform(const Transform &t);
+        const Status &status();
+        Unit &setStatus(const Transform::Direction &d, ElectricPotential ep);
+
+        /**
+         * Update the Status information of this Unit.
+         */
+        virtual Unit &update(const Transform::Direction &srcDir);
+        /**
+         * Toggle the State (if possible) of this Unit.
+         */
+        virtual Unit &toggle();
 #ifdef DEBUG
         virtual void print()
         {
@@ -60,6 +74,7 @@ class Unit
     protected:
         Transform mtransform;
         Type mtype;
+        Status mstatus;
 };
 
 }}
