@@ -1,14 +1,23 @@
 #include <iostream>
-#include <unordered_map>
-enum E {a = 0, b = 1};
-E operator!(E e)
+#include <chrono>
+#include <thread>
+using namespace std;
+void foo()
 {
-    return E(e ^ 1);
+    cout << "#";
+    this_thread::sleep_for(chrono::seconds(1) + chrono::milliseconds(500));
+    cout << ".";
 }
 
 int main()
 {
-    std::unordered_map<E, int, std::hash<int>, std::equal_to<int>, std::allocator<std::pair<const int, int>>> m;
+    while (true)
+    {
+        auto start = chrono::steady_clock::now();
+        foo();
+        // If now() > start+duration, do not sleep()
+        this_thread::sleep_until(start + chrono::seconds(1));
+    }
     return 0;
 }
 

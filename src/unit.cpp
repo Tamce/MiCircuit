@@ -16,7 +16,7 @@ namespace tmc { namespace mcc {
         return mstatus;
     }
 
-    Unit &Unit::setStatus(const Transform::Direction &d, ElectricPotential ep)
+    Unit &Unit::setStatus(const Transform::Direction &d, const ElectricPotential &ep)
     {
         mstatus[d] = ep;
         return *this;
@@ -32,7 +32,7 @@ namespace tmc { namespace mcc {
         return mtype;
     }
 
-    Unit &Unit::update(const Transform::Direction &srcDir)
+    Unit &Unit::update(const Transform::Direction &srcDir, const ElectricPotential &ep)
     {
         return *this;
     }

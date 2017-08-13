@@ -55,12 +55,12 @@ class Unit
         const Transform &transform() const;
         Unit &setTransform(const Transform &t);
         const Status &status() const;
-        Unit &setStatus(const Transform::Direction &d, ElectricPotential ep);
+        Unit &setStatus(const Transform::Direction &d, const ElectricPotential &ep);
 
         /**
          * Update the Status information of this Unit.
          */
-        virtual Unit &update(const Transform::Direction &srcDir);
+        virtual Unit &update(const Transform::Direction &srcDir, const ElectricPotential &ep);
         /**
          * Toggle the State (if possible) of this Unit.
          */
