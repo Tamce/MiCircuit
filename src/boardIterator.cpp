@@ -3,14 +3,14 @@
 
 namespace tmc { namespace mcc {
     
-    Unit &BoardIterator::operator*()
+    const Unit &BoardIterator::operator*()
     {
         return get();
     }
 
-    Unit &BoardIterator::get()
+    const Unit &BoardIterator::get()
     {
-        return board.at(position);
+        return board.get(position);
     }
 
     const Transform::Position &BoardIterator::pos() const

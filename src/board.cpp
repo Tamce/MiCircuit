@@ -12,6 +12,16 @@ namespace tmc { namespace mcc {
         delete[] units;
     }
 
+    BoardIterator Board::iterator()
+    {
+        return BoardIterator(*this);
+    }
+
+    BoardIterator Board::iterator(const Transform::Position &p)
+    {
+        return BoardIterator(*this, p);
+    }
+
     void Board::resize(const Transform::Position &_size)
     {
         delete[] units;
@@ -62,19 +72,26 @@ namespace tmc { namespace mcc {
     {
         auto target = at(p);
         if (target.is(UnitType::Null))
+        {
+            if (updateCallback)
+                updateCallback(target, u);
             target = u;
+        }
         return *this;
     }
 
     Board &Board::replace(const Transform::Position &p, const Unit &u)
     {
-        at(p) = u;
+        auto target = at(p);
+        if (updateCallback)
+            updateCallback(target, u);
+        target = u;
         return *this;
     }
 
     Board &Board::remove(const Transform::Position &p)
     {
-        return replace(p, Unit(UnitType::Null));
+        return replace(p, Unit(UnitType::Null, p.transform()));
     }
 
 // the close brackets of namespace tmc::mcc

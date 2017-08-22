@@ -12,8 +12,8 @@ class BoardIterator
         BoardIterator(Board &_board, Transform::Position p):board(_board), position(p) {}
         BoardIterator(Board &_board, const Unit &unit):board(_board), position(unit.transform().position()) {}
         /* Get the element that the iterator is pointing to */
-        Unit &operator*();
-        Unit &get();
+        const Unit &operator*();
+        const Unit &get();
         const Transform::Position &pos() const;
         /* Move the iterator by 1 unit */
         BoardIterator &top();
