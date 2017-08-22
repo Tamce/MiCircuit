@@ -1,4 +1,4 @@
-#include "include/board.h"
+#include "../include/board.h"
 
 namespace tmc { namespace mcc {
 

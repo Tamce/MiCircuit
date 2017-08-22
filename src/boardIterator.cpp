@@ -1,5 +1,5 @@
-#include "include/boardIterator.h"
-#include "include/transform.h"
+#include "../include/boardIterator.h"
+#include "../include/transform.h"
 
 namespace tmc { namespace mcc {
     

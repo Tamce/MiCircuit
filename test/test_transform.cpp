@@ -1,5 +1,5 @@
 #define DEBUG
-#include "../src/include/transform.h"
+#include "../include/transform.h"
 #include <cstdio>
 using namespace std;
 using namespace tmc::mcc;
