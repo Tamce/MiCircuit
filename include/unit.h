@@ -44,7 +44,7 @@ class Unit
             Transform::Direction, ElectricPotential,
             ::std::hash<int>, ::std::equal_to<int>, ::std::allocator<std::pair<const int, ElectricPotential>>> Status;
 
-        Unit(const Type &t, const Transform &tr):mtype(t),mtransform(tr){}
+        Unit(const Type &t, const Transform &tr):mtype(t),mtransform(tr), mstatus({{Transform::Direction::up, 0},{Transform::Direction::down, 0},{Transform::Direction::left, 0},{Transform::Direction::right, 0},{Transform::Direction::top, 0},{Transform::Direction::bottom, 0}}) {}
         Unit(const Type &t):Unit(t, Transform()){}
         Unit():Unit(UnitType::Null, Transform()){}
         /**
@@ -66,14 +66,14 @@ class Unit
          */
         virtual Unit &toggle();
 #ifdef DEBUG
-        virtual void print()
+        virtual void print() const
         {
             std::printf("Unit(%d;%d,%d,%d):Status(%d,%d,%d,%d,%d,%d)\n",
                 mtype,
                 mtransform.position()[0], mtransform.position()[1], mtransform.position()[2],
-                mstatus[Transform::Direction::up], mstatus[Transform::Direction::down],
-                mstatus[Transform::Direction::left], mstatus[Transform::Direction::right],
-                mstatus[Transform::Direction::top], mstatus[Transform::Direction::bottom]);
+                mstatus.at(Transform::Direction::up), mstatus.at(Transform::Direction::down),
+                mstatus.at(Transform::Direction::left), mstatus.at(Transform::Direction::right),
+                mstatus.at(Transform::Direction::top), mstatus.at(Transform::Direction::bottom));
         }
 #endif
     protected:

@@ -40,11 +40,12 @@ protected:
 public:
     MiCircuit();
     MiCircuit(const Size &s);
-    ~Micircuit();
+    ~MiCircuit();
     Board &board();
 
+    void setupPeriod(duration d);
     /* Start a `updating` thread updating status in `update` queue every `period` */
-    void run(duration d);
+    void run();
     /* Pause the `updating` thread */
     void pause();
     /* Reset all the status of the units on the board*/

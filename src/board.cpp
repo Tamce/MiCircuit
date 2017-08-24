@@ -91,7 +91,7 @@ namespace tmc { namespace mcc {
 
     Board &Board::remove(const Transform::Position &p)
     {
-        return replace(p, Unit(UnitType::Null, p.transform()));
+        return replace(p, Unit(UnitType::Null, Transform(p)));
     }
 
 // the close brackets of namespace tmc::mcc

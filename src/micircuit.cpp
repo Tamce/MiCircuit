@@ -3,16 +3,15 @@
 #endif
 #include "../include/micircuit.h"
 namespace tmc { namespace mcc {
-    MiCircuit::MiCircuit():paused(false)
-    {
+    MiCircuit::MiCircuit():MiCircuit({0,0,0}) {}
+    MiCircuit::MiCircuit(const Size &s):mboard(s),paused(false),period(std::chrono::milliseconds(1)) {
         // Construct a loop list  (1 -> 2 -> 1)
         update = new _EventQueue(nullptr);
         update->next = new _EventQueue(update);
-        mboard.updateCallback = std::bind(&MiCircuit::boardUpdate, *this);
+        mboard.updateCallback = std::bind(&MiCircuit::boardUpdate, this, std::placeholders::_1, std::placeholders::_2);
     }
-    MiCircuit::MiCircuit(const Size &s):MiCircuit(),mboard(s) {}
 
-    ~MiCircuit::MiCircuit()
+    MiCircuit::~MiCircuit()
     {
         delete update->next;
         delete update;
@@ -31,8 +30,13 @@ namespace tmc { namespace mcc {
     void MiCircuit::tick()
     {
         #ifdef DEBUG
-        cout << "<tick>";
+        std::cout << "<tick>";
         #endif
+    }
+
+    void MiCircuit::setupPeriod(duration d)
+    {
+        period = d;
     }
 
     void MiCircuit::run()
@@ -43,7 +47,7 @@ namespace tmc { namespace mcc {
             return;
         }
 
-        timer = thread([&](){
+        timer = std::thread([&](){
             while (true)
             {
                 if (paused)
@@ -89,7 +93,7 @@ namespace tmc { namespace mcc {
         return mboard.replace(p, u).get(p);
     }
 
-    const Unit &MiCircuit::remove(const Transform::Position &p);
+    const Unit &MiCircuit::remove(const Transform::Position &p)
     {
         return mboard.remove(p).get(p);
     }

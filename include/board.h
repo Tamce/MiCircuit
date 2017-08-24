@@ -2,13 +2,13 @@
 #define __TMC_MCC_BOARD_H__
 #include "common.h"
 #include "unit.h"
-#include "boardIterator.h"
 #include <array>
 #include <vector>
 #include <functional>
 
 namespace tmc { namespace mcc {
 
+class BoardIterator;
 class Board
 {
     public:
